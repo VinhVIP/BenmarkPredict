@@ -21,7 +21,7 @@ warnings.filterwarnings('ignore')
 
 
 # Đọc dữ liệu được lưu ở file có định dạng .csv
-data = pd.read_csv('data/data_kt.csv')
+data = pd.read_csv('data/data_qtkd.csv')
 
 data
 
@@ -87,7 +87,7 @@ nam = np.array([2017, 2018, 2019, 2020, 2021, 2022])
 
 plt.plot(nam, diem_chuan, 'bo-', label='Điểm chuẩn', linestyle='dashed')
 plt.plot(nam, diem_du_doan, 'ro-', label='Dự đoán')
-
+plt.title("Quản trị kinh doanh")
 plt.legend(loc='best')
 plt.show()
 
