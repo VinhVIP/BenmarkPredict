@@ -7,6 +7,7 @@
 import pandas as pd
 from sklearn import linear_model
 from sklearn.linear_model import Ridge
+from sklearn import linear_model
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import GridSearchCV
@@ -44,6 +45,15 @@ y_test = df_test[['diem chuan']]
 df_train = df.drop(df.index[index_test])
 x_train = df_train[['ti le trung tuyen', 'dtb ca nuoc', 'tong dang ky']]
 y_train = df_train[['diem chuan']]
+
+#### Linear
+model = linear_model.LinearRegression()
+model.fit(x_train, y_train)
+
+print(model.coef_)
+
+
+
 
 # Chọn giá trị alpha cho rigde regression là 2.5
 alpha = 2.5

@@ -1,0 +1,3 @@
+- Vẽ lại biểu đồ 2017 - 2021
+- Quy chuẩn các giá trị biến độc lập
+- Phân tích các tổ hợp biến lập 
