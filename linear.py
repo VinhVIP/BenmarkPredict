@@ -13,8 +13,6 @@ class Matrix:
 
             self.data = arr
 
-            print(self.data)
-
 
     def getRow(self, row):
         return self.data[row]
@@ -34,7 +32,7 @@ class Matrix:
                 rowData.append(self.data[row][i])
         self.data[row] = rowData
 
-    def times(self, matrix):
+    def multiple(self, matrix):
         rc1 = self.rowCount
         cc1 = self.colCount
         rc2 = matrix.rowCount
@@ -59,7 +57,6 @@ class Matrix:
             for j in range(rc):
                 trans.setValue(i, j, self.getValue(j, i))
         
-        print(trans.data)
         return trans
     
     def toReducedRowEchelonForm(self):
@@ -119,23 +116,41 @@ class Matrix:
         return inv
 
 
+# def linearRegression(x, y):
+#         tm = Matrix(arr = [y])
+#         cy = tm.transpose()
+#         cx = x.transpose()
+#         return x.multiple(cx).inverse().multiple(x).multiple(cy).transpose().getRow(0)
 
 
-def multipleRegression(y, x):
-    tm = Matrix(arr = [y])
-    cy = tm.transpose()
-    cx = x.transpose()
-    return x.times(cx).inverse().times(x).times(cy).transpose().getRow(0)
+class MyLinearRegression():
+
+    def fit(self, X, Y):
+        x = Matrix(arr = X)
+        tm = Matrix(arr = [Y])
+        cy = tm.transpose()
+        cx = x.transpose()
+        self.coef_ = x.multiple(cx).inverse().multiple(x).multiple(cy).transpose().getRow(0)
+
+    def predict(self, x):
+        res = 0.0
+        for i in range(len(x)):
+            res = res + x[i] * self.coef_[i]
+        return res
 
 
+# y = [23.25, 20.25, 22.0, 25.1, 25.9]
+# x = Matrix(arr = [[0.555667, 0.517833, 0.585333, 0.692167, 0.697], [0.1912, 0.2192, 0.1417, 0.1749, 0.2513], [1.0, 1.0, 1.0, 1.0, 1.0]])
 
-y = [23.25, 20.25, 22.0, 25.1, 25.9]
-x = Matrix(arr = [[0.555667, 0.517833, 0.585333, 0.692167, 0.697], [0.1912, 0.2192, 0.1417, 0.1749, 0.2513], [1.0, 1.0, 1.0, 1.0, 1.0]])
+# x_test = [0.708666, 0.1979, 1]
+# # v = linearRegression(x, y)
+# # print(v)
 
-v = multipleRegression(y, x)
-# print(x.data)
-print(v)
-# print(x.data)
+# linear = MyLinearRegression()
+# linear.fit(x, y)
+
+# print(linear.coef_)
+# print(linear.predict(x_test))
 
 
 
