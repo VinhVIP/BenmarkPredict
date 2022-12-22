@@ -1,9 +1,6 @@
 from tkinter import *
 from tkinter import filedialog
 from tkinter.messagebox import showinfo
-import tkinter.ttk as ttk
-import csv
-
 import pandas as pd
 from sklearn import linear_model
 import numpy as np
@@ -48,7 +45,6 @@ class BenmarkPredict:
 
 		self.window.mainloop()
 
-
 	def selectFileTrain(self):
 		self.fileTrain = filedialog.askopenfilename(filetypes = (("Text files","*.csv"),("All files","*.*")))
 		self.pathTrain.delete(0, END)
@@ -62,8 +58,11 @@ class BenmarkPredict:
 	def runPredict(self):
 		if self.fileTrain != None and self.fileTest != None:
 			self.res = ""
-			self.runMyLib(['dtb ca nuoc', 'tong dang ky', 'ti le trung tuyen'])
-			self.run(['dtb ca nuoc', 'tong dang ky', 'ti le trung tuyen'])
+			# tohop = ['dtb ca nuoc', 'tong dang ky', 'ti le trung tuyen']
+			tohop = ['dtb ca nuoc', 'tong dang ky', 'ti le trung tuyen']
+
+			self.runMyLib(tohop)
+			self.run(tohop)
 			# self.lblMyResult.configure(text = self.res)
 
 		else:
@@ -131,12 +130,10 @@ class BenmarkPredict:
 
 		# R^2
 		r_sq = model.score(x_train, y_train)
-
+		print('R-Squared: ', r_sq)
 
 		# Dự đoán điểm chuẩn cho năm 2022
 		dc_predict = model.predict(x_test)
-
-
 		dc2022 = dc_predict[0][0]
 
 		print('Điểm dự đoán: ', dc2022)
@@ -144,6 +141,7 @@ class BenmarkPredict:
 
 		self.res += "Sử dụng thư viện SKLearn\n"
 		# self.res += "Điểm dự đoán: " + "{:.2f}".format(dc2022) + "\n"
+		self.res += "R-squared: " + str(r_sq) + "\n"
 		self.res += "Điểm dự đoán: " + str(dc2022) + "\n"
 		self.res += "Hệ số: " + str(model.coef_[0]) +' ' + str(model.intercept_) + "\n"
 
@@ -166,6 +164,17 @@ class BenmarkPredict:
 
 		plt.plot(nam, diem_chuan, 'bo-', label='Điểm chuẩn')
 		plt.plot(nam, diem_du_doan, 'ro-', label='Dự đoán', linestyle='dashed')
+
+		plt.xlabel('Năm')
+		plt.ylabel('Điểm')
+		plt.xticks([2017, 2018, 2019, 2020, 2021], [2017, 2018, 2019, 2020, 2021])
+
+
+		# for i,j in zip(nam, diem_chuan):
+		# 	plt.text(i-0.1, j-0.25, '{:.2f}'.format(j[0]), {'color':'blue'})
+
+		# for i,j in zip(nam, diem_du_doan):
+		# 	plt.text(i-0.1, j+0.25, '{:.2f}'.format(j[0]), {'color':'red'})
 
 		plt.legend(loc='best')
 		plt.show()
